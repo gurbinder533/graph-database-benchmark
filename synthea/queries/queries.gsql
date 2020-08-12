@@ -1,0 +1,112 @@
+use graph synthea
+drop query FindProvider
+drop query PatientRecordRetrieval
+drop query similarPatient_organic
+
+CREATE QUERY FindProvider(float lat, float lon, float distKm, vertex<PatientProcedure> procedure, int k) FOR GRAPH synthea {
+  /****************************************************************************************
+   * This query will find a provider for a specific procedure within a given distance     *
+   * Input a latitude and longitude point, along with a distance around that point,       *
+   *   procedure, and the number of results you would want to see.                        *
+   *                                                                                      *
+   * sample input:                                                                        *
+   *    lat : 37                                                                          *
+   *    long : -122                                                                       *
+   *    dist : 25000                                                                      *
+   *    procedure : 19490002                                                              *
+   *    k : 100                                                                           *
+   ****************************************************************************************/
+
+        SetAccum<string> @@vSet;
+        SetAccum<EDGE> @@edges;
+        MinAccum<float> @dist;
+        SumAccum<float> @latitude, @longitude;
+        MapAccum<int, SumAccum<int>> @@groupByDist;
+        MapAccum<string, SumAccum<int>> @@groupByFactFDR;
+        SumAccum<int> @cnt;
+        SumAccum<float> @percentage;
+
+        @@vSet += getNearbyGridId(distKm, lat, lon);
+        grids = to_vertex_set(@@vSet, "GeoGrid");
+
+        provider = select t from grids:s-(providerLocatedAt:e)-:t
+                   where geoDistance(lat, lon, e.Latitude, e.Longitude) <= distKm
+                   accum t.@dist += geoDistance(lat, lon, e.Latitude, e.Longitude),
+                         t.@latitude = e.Latitude, t.@longitude = e.Longitude;
+
+        provider = select s from provider:s-(providerProcedure:e)-:t
+                   where t == procedure
+                   accum s.@cnt += e.cnt
+                   post-accum s.@percentage = s.@cnt/s.outdegree("providerVisit")
+                   order by s.@dist asc, s.@percentage desc, s.@cnt desc
+                   limit k;
+
+        print provider;
+}
+
+CREATE QUERY PatientRecordRetrieval(vertex<Patient> inputPatient, datetime startTime, datetime endTime) FOR GRAPH synthea {
+  /*************************************************************
+   * Query will show a patient's records.                      *
+   * Input a patient, and a timespan, and it will retreive     *
+   * all records within the given time range.                  *
+   *                                                           *
+   * Sample input :                                            *
+   *   patient : 5a0a1372-dc71-4371-bcf2-2fcab7151d58          *
+   *   start : 1970-01-01                                      *
+   *   end : 2020-01-01                                        *
+   *************************************************************/
+
+  SetAccum<string> @@itemTypes;
+
+  start = {inputPatient};
+  print start;
+
+  records = select t from start-()-:t
+            where t.Started >= startTime and t.Started <= endTime
+            accum @@itemTypes += t.type;
+
+  print records;
+
+  print @@itemTypes;
+}
+
+CREATE DISTRIBUTED QUERY similarPatient_organic(vertex<Patient> inputPatient, int k, set<string> additionalEdgeType) FOR GRAPH synthea {
+  /********************************************************************
+   * This query shows the top k similar patients to one input patient *
+   * Input a patient, a set of conditions that you want to check for  *
+   *   that there other patients are similar to, and a the max num of *
+   *   results you want to see                                        *
+   *                                                                  *
+   * Sample input:                                                    *
+   *   patient : 5a0a1372-dc71-4371-bcf2-2fcab7151d58                 *
+   *   k : 100                                                        *
+   *   prereq : hasMedication                                         *
+   ********************************************************************/
+
+        SumAccum<FLOAT> @numerator, @@norm1, @norm2, @similarity;
+        MapAccum<VERTEX, FLOAT> @@topK_result;
+        SetAccum<STRING> @@edgeTypes;
+
+        start = {inputPatient};
+        attr      = SELECT t
+                    FROM start:s -((hasAllergy|hasObservation|hasMedication|useDevice|hasCondition|hasImmunization|hasImagingStudy|hasProcedure):e)-> :t
+                    ACCUM t.@numerator = 1,
+                          @@norm1 += pow(1, 2);
+
+        patients   = SELECT t
+                     FROM attr:s -((hasAllergy|hasObservation|hasMedication|useDevice|hasCondition|hasImmunization|hasImagingStudy|hasProcedure):e)-> :t
+                     ACCUM t.@numerator += s.@numerator;
+
+        neighbours = SELECT s
+                     FROM patients:s -((hasAllergy|hasObservation|hasMedication|useDevice|hasCondition|hasImmunization|hasImagingStudy|hasProcedure):e)-> :t
+                     ACCUM s.@norm2 += 1
+                     POST-ACCUM s.@similarity = s.@numerator/sqrt(@@norm1 * s.@norm2),
+                                  s.@similarity += 0.1
+                     ORDER BY s.@similarity DESC
+                     LIMIT k;
+
+        PRINT neighbours;
+}
+
+
+install query *
