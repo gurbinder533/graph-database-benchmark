@@ -1,0 +1,1182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.2.1">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Distributed Throughput Test" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ReadWrite Test" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">600</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M1 Throughput 22.5" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M2 Throughput 22.5" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M3 Throughput 22.5" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M4 Throughput 22.5" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M5 Throughput" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M6 Throughput" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M7 Throughput" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="M8 Throughput" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>11.25</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">/FILE_LOCATION</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">patients</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Query " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">query/synthea/PatientRecordRetrieval?inputPatient=${patients}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">query read</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="PatientIDs" enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">/FILE_LOCATION</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">patients</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>0.8</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+            <stringProp name="HTTPSampler.port">9000</stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers"/>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M2" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M3" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M4" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M5" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M6" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M7" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Data Throughput 2.5" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <FloatProperty>
+              <name>ThroughputController.percentThroughput</name>
+              <value>0.8</value>
+              <savedValue>0.0</savedValue>
+            </FloatProperty>
+          </ThroughputController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Data Loading M8" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">7bfa80c7-55f7-4e8f-9be9-304f30ec45a3,1993-08-20,,999-64-8690,S99967030,X75635514X,Mr.,Mateo562,Montaño969,,,,black,hispanic,M,San Jose  San Jose  CR,849 Deckow Ville,Fremont,California,Alameda County,94555,37.46621889846004,-121.94352377686555,556347.6699999999,4741.75&#xd;
+fd19fd7e-5c6f-4747-a40a-d1a00dc10402,1991-09-26,,999-49-5721,S99967303,X62865554X,Mrs.,Patricia625,Ceja441,,Ornelas92,M,white,hispanic,F,Bogota  Bogota  CO,955 Johnston Manor,Pasadena,California,Los Angeles County,91106,34.086212184722626,-118.14549842952918,677917.1,4779.2&#xd;
+57772912-d622-4cfa-bb52-00647adfdac6,1989-06-11,,999-90-2116,S99910339,X40216194X,Mr.,Jan231,Bernier607,,,M,white,nonhispanic,M,Hayward  California  US,594 Rogahn Gardens Suite 29,Los Angeles,California,Los Angeles County,91411,34.286238526632644,-118.35311570287023,676258.66,8861.48&#xd;
+80e15f22-b3e7-4320-9637-389d41766559,1990-03-20,,999-84-7094,S99954127,X5036480X,Mrs.,Estell607,Weissnat378,,Dach178,M,white,hispanic,F,Visalia  California  US,207 Langosh Light Unit 51,Palm Springs,California,Riverside County,92241,33.812674690281554,-116.60577269664077,654185.47,10969.91&#xd;
+8373a9d0-52cb-467f-9baa-252c56712559,1965-09-29,2002-09-24,999-95-8909,S99945390,X71176767X,Mr.,Sylvester827,Sauer652,,,M,white,hispanic,M,Palo Alto  California  US,962 Welch Estate,San Diego,California,San Diego County,,32.784430524166176,-117.16757393588493,125352.02,28210.879999999997&#xd;
+549ebbf4-3de3-4164-aa60-82cd31ac1d8b,1968-02-02,,999-47-1869,S99982977,X35964019X,Mr.,Jerrell6,Schroeder447,,,M,white,hispanic,M,Los Angeles  California  US,750 Monahan Extension,Norco,California,Riverside County,92879,33.944322306762615,-117.52051024730302,1262402.5,6179.5&#xd;
+4af9ec9f-b1da-4ed5-bbbe-672e3943cf08,1998-05-27,,999-15-6375,S99934782,X85839056X,Ms.,Danika134,Walsh511,,,,white,nonhispanic,F,Yorba Linda  California  US,985 Kuhic Divide Suite 54,Anaheim,California,Orange County,92867,33.74368076730002,-117.89397260286849,557927.9,5270.05&#xd;
+5c97173e-ff8d-4113-98c0-a7b19f9ac540,1955-12-06,,999-50-4411,S99953561,X36781217X,Mrs.,Berta524,Blanco851,,Ferrer164,M,asian,hispanic,F,Carolina  Puerto Rico  PR,687 Thompson Fort,San Francisco,California,San Francisco County,94131,37.736544558251545,-122.39822508737284,204757.42,17919.89&#xd;
+db43e4e8-2122-4e26-b841-5c2d8269d8ff,1956-10-02,,999-78-1759,S99982294,X40221148X,Mrs.,Dedra50,Fay398,,O&apos;Keefe54,M,white,nonhispanic,F,Sacramento  California  US,309 Kovacek Station Unit 97,Los Angeles,California,Los Angeles County,90056,34.08064840417342,-118.29444561693025,1301962.6199999999,11587.3&#xd;
+238ada30-079a-44a0-9537-084af923bb60,1972-02-16,,999-63-5282,S99949040,X43936002X,Mr.,Blair400,Hills818,,,M,asian,nonhispanic,M,Cypress  California  US,976 Flatley Viaduct Unit 72,La Mesa,California,San Diego County,91942,32.80730413591693,-117.03679610879759,11044.65,0.0&#xd;
+763e1a5e-d38f-44d6-9bf3-67fa2326732d,2010-11-14,,999-21-7834,,,,Benito209,Melgar516,,,,white,hispanic,M,Gaudalajara  Jalisco  MX,757 Cormier Route,Merced,California,Merced County,95348,37.31872595789545,-120.44172097780235,232297.21,2787.0&#xd;
+a176a5f2-8ae0-459e-bb06-9ab232a3e94f,1977-02-09,,999-70-2109,S99932814,X22166102X,Mrs.,Kasey569,Bartell116,,Hackett68,M,white,nonhispanic,F,Orange  California  US,234 Pfannerstill Fort,Redding,California,Shasta County,96002,40.59627277476329,-122.33965283103824,955098.62,12136.759999999998&#xd;
+0edf1bfa-f7fa-4efe-abb5-41c1417bfe8c,1993-08-25,,999-26-4193,S99945091,X77965842X,Ms.,Tesha491,Wisoky380,,,,asian,nonhispanic,F,Aliso Viejo  California  US,380 Effertz Meadow Unit 86,San Francisco,California,San Francisco County,94129,37.78723022953389,-122.47067229049262,685637.8099999999,4703.25&#xd;
+fb75e4b7-a53b-4ede-95da-563685cdd132,1965-09-29,,999-72-8151,S99947598,X15154220X,Mr.,Arnoldo445,Schaden604,,,M,white,hispanic,M,Chico  California  US,444 Stamm Branch,San Diego,California,San Diego County,92105,33.01248628765167,-117.12151800576508,171991.38,18733.96&#xd;
+4a2311ce-7a7d-4043-8b8a-4545c4222d14,1950-05-15,,999-95-5898,S99962849,X75013374X,Mr.,Emmitt44,Brown30,,,M,white,hispanic,M,Santa Barbara  California  US,228 Kulas Extension Suite 4,Santa Monica,California,Los Angeles County,90403,33.98405434672904,-118.47831881017783,1433386.43,22942.399999999998&#xd;
+662fcf35-0742-456e-8cf7-6bea68f0763a,1962-01-18,,999-20-8895,S99928924,X79713631X,Ms.,Magdalen131,Upton904,,,S,white,nonhispanic,F,Glendale  California  US,767 Dare Center Apt 30,Benicia,California,Solano County,94510,38.165192432041955,-122.19724662027967,1397003.72,8762.45&#xd;
+688ddc20-5c43-4cae-82f3-499b70f0f8e8,1995-03-22,,999-78-7124,S99965176,X89872700X,Mr.,Glen190,Volkman526,,,,white,nonhispanic,M,Los Angeles  California  US,1077 Flatley Club Suite 72,Sacramento,California,Sacramento County,95821,38.56702323931516,-121.3694769592363,682589.12,3330.5&#xd;
+3632c71c-d551-44bd-b972-19103003c0e0,1960-06-04,,999-86-5804,S99931102,X22919272X,Mrs.,Donetta1,Carter549,,Murphy561,M,white,nonhispanic,F,Garden Grove  California  US,1083 Johns Extension,Oakland,California,Alameda County,94602,37.804206734624245,-122.24020070562895,1185676.69,17028.42&#xd;
+05224392-9285-41a0-b77c-a9b3648595ba,1993-03-17,,999-43-3718,S99928372,X18480142X,Mrs.,Katharina121,Pacocha935,,Zieme486,M,white,nonhispanic,F,San Diego  California  US,135 Hessel Heights Unit 72,Chula Vista,California,San Diego County,91914,32.61001646944485,-116.96440128408703,572939.99,9778.8&#xd;
+a4fe4b96-de85-40a9-94af-c9410400e27b,1960-10-21,,999-38-3010,S99994666,X28453119X,Mr.,Teodoro374,Cornejo190,,,M,asian,hispanic,M,Juarez  Chihuahua  MX,509 Daugherty Rest Unit 76,Stockton,California,San Joaquin County,95209,37.90582090784572,-121.29271791552704,1369154.17,6301.2&#xd;
+c47a6292-eaaa-4716-a12a-1be49a6ffad2,1950-11-30,,999-72-8675,S99960266,X8847204X,Mr.,Ignacio928,Irizarry542,,,M,white,hispanic,M,Santiago  Santiago Province  CL,782 Mohr Station,Guadalupe,California,Santa Barbara County,93455,34.797196652567244,-120.47595984116109,1590797.03,16644.26&#xd;
+582e8ecf-cddc-4434-b168-847637e29edb,1950-08-18,,999-27-6735,S99914488,X47581600X,Ms.,Erminia669,Wiegand701,,,S,white,nonhispanic,F,Merced  California  US,422 Cole Viaduct Unit 61,Santa Clarita,California,Los Angeles County,91350,34.43571948353072,-118.5439296148721,1542844.48,21830.91&#xd;
+abb72b06-48d1-4818-80ed-e451784800c2,1967-12-30,,999-19-6386,S99915488,X37600889X,Mr.,Tuan998,Kerluke267,,,M,white,nonhispanic,M,Hayward  California  US,420 Effertz Track,Santa Fe Springs,California,Los Angeles County,90670,33.81964451317449,-118.1126947764284,1201472.74,5262.7&#xd;
+bd9f99eb-44c6-4556-b79a-145aeb7fa1d6,1990-03-03,,999-39-4194,S99951350,X85621393X,Mrs.,Barbara209,Almanza534,,Delgado712,M,asian,hispanic,F,Bayamon  Puerto Rico  PR,294 Hoeger Lodge,Oakland,California,Alameda County,94619,37.82263294229271,-122.26973229191586,97328.7,9359.08&#xd;
+30b12c08-a1c4-47cd-bc02-943985ee917e,1984-09-10,,999-40-6780,S99935378,X77658016X,Mrs.,María Eugenia578,Rivera179,,Torres807,M,white,hispanic,F,Panama City  Panama  PA,1037 Huels Vista,Chico,California,Butte County,95973,39.793473170517174,-121.8549181004756,709833.87,7647.46&#xd;
+3adbbb93-d3ba-4686-9043-a2a64061b284,2000-06-01,,999-20-6482,S99918493,,Ms.,Ileen763,Terry864,,,,white,nonhispanic,F,Modesto  California  US,425 Bergnaum Lane,Folsom,California,Sacramento County,95670,38.70830148807539,-121.13178254328129,486183.76,4102.3&#xd;
+64e97f92-adab-41af-9ab3-1e6cf0337d85,2001-05-14,,999-45-7928,S99941105,,Ms.,Annetta101,Bode78,,,,white,nonhispanic,F,San Luis Obispo  California  US,407 Toy Club Suite 42,Los Angeles,California,Los Angeles County,91316,34.256328415852515,-118.32388339578,508404.79,3222.95&#xd;
+e273cca7-6b9c-4b1e-a9a3-b9d8cd75e11b,1979-10-31,,999-27-9165,S99969085,X25312524X,Mr.,Wyatt967,Jerde200,,,S,asian,nonhispanic,M,West Covina  California  US,1067 Heller Route Unit 56,San Diego,California,San Diego County,92075,32.78545086924552,-117.04020879507726,1087781.88,5276.65&#xd;
+8d2b2611-c13c-4c7f-99b6-ecb6b605c7b9,1990-12-14,,999-18-8882,S99931897,X69827255X,Ms.,Vinnie529,Marquardt819,,,S,white,nonhispanic,F,Montebello  California  US,983 Prosacco Crossing,Mountain View,California,Santa Clara County,94553,37.36643434670373,-122.0923792637318,169898.98,5978.030000000001&#xd;
+44a1fe98-e2cd-418b-98d5-7b2469028e60,1943-01-23,2010-02-02,999-27-4211,S99988541,X76225473X,Mrs.,Azzie965,Hegmann834,,Emard19,M,white,hispanic,F,Bakersfield  California  US,589 Rohan Vale Apt 72,West Covina,California,Los Angeles County,91746,34.11375062826515,-118.01498543628531,1439091.17,10698.05&#xd;
+a6c8d658-0142-4651-a23e-1f609a1b1342,1977-03-02,,999-33-1332,S99991086,X89071603X,Mr.,Brendon298,Cormier289,,,M,asian,nonhispanic,M,Ho Chi Minh City  Gia Định  VN,1057 Connelly Branch Suite 48,Danville,California,Contra Costa County,94528,37.84117423374975,-121.9710595273446,1043951.61,4286.65&#xd;
+cc3415b1-5a68-4d55-9852-be33ff469592,1995-04-21,,999-23-4669,S99992775,X53650366X,Mr.,Stephen891,Hermann103,,,,white,nonhispanic,M,Los Angeles  California  US,1057 Mayert Green,Los Angeles,California,Los Angeles County,90744,34.19853995500251,-118.36055516852963,628609.67,4673.650000000001&#xd;
+8a3b7bc4-2a1f-4690-8990-cd1f4bab8839,1948-08-21,,999-27-6838,S99994284,X29639686X,Mrs.,Claire652,Beahan375,,Lesch175,M,black,nonhispanic,F,Oakland  California  US,706 Mante Landing,Moreno Valley,California,Riverside County,92507,33.8884529007531,-117.1422306237947,1514387.8299999998,12725.779999999999&#xd;
+0b726111-55a5-4900-b412-e8ed089b9e41,1994-06-06,,999-38-3886,S99991992,X61443912X,Ms.,Graciela518,Ibarra303,,,,asian,hispanic,F,Portsmouth  Saint John Parish  DM,775 Doyle Meadow Apt 87,San Francisco,California,San Francisco County,94109,37.72699610743279,-122.36947784383352,664211.9,5235.9</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">MACHINE_IP_HERE</stringProp>
+              <stringProp name="HTTPSampler.port">9000</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/ddl/synthea?tag=loadPatients&amp;filename=f</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.773</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">Created from cURL on 2020-05-13T14:37:26.777</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
